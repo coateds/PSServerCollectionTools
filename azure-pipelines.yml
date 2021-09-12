@@ -1,0 +1,16 @@
+trigger:
+- main
+pool:
+  vmImage: windows-latest
+steps:
+- task: Pester@10
+  inputs:
+    scriptFolder: '$(System.DefaultWorkingDirectory)\*'
+    resultsFile: '$(System.DefaultWorkingDirectory)\Test-Pester.xml'
+    usePSCore: False
+  continueOnError: true
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'NUnit'
+    testResultsFiles: 'Test-Pester.xml'
+    failTaskOnFailedTests: true
