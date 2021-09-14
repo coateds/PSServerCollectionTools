@@ -1,7 +1,8 @@
 Describe 'Get-MachineModelOnPipeline.Tests' {
-    Import-Module "$PSScriptRoot\..\PSServerCollectionTools\PSServerCollectionTools.psm1" -Force
     
     BeforeAll {
+        Import-Module "$PSScriptRoot\..\PSServerCollectionTools\PSServerCollectionTools.psm1" -Force
+    
         Mock -CommandName Get-CimInstance -ModuleName PSServerCollectionTools -MockWith {
             return (
                 [PSCustomObject]@{Model = 'AnyModel'}
