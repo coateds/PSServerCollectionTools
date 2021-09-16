@@ -4,26 +4,49 @@ Function Get-VolumeInfoOnPipeline
         .Synopsis
             Adds Volume Info Columns to an object
         .DESCRIPTION
-            This typically takes an imported csv file with a ComputerName Column as an imput object
+            This typically takes an imported csv file with a ComputerName Column as an iput object
             but just about any collection of objects that exposes .ComputerName should work
-            The output is the same type of object as the input (hopefully) so that it can be piped
+            The output is the same type of object as the input so that it can be piped
             to the next function to add another column
+
             Columns returned are a subset of Win32_Volume
 
             Adds rows as needed. One per drive after the first (usually c:)
 
             By default, each new row gets a copy of all the data in the non Volume columns. This allows
             for filtering with Where-Object.
+        .EXAMPLE
+            Get-ServerCollection |
+                Test-ServerConnectionOnPipeline |
+                Get-ProcInfoOnPipeline |
+                Get-VolumeInfoOnPipeline |
+                Select-Object ComputerName,TotalProcs,ProcName,Cores,Volumes,DriveType,Capacity,PctFree |
+                Format-Table -autosize
 
-            Use the -ReportMode switch to provision a new empty row for all added rows. This is more readable.
+            A Sampling of Functions and Columns
         .EXAMPLE
-            Get-ServerCollection | Test-ServerConnectionOnPipeline | Get-ProcInfoOnPipeline | Get-VolumeInfoOnPipeline -ReportMOde | Select ComputerName,TotalProcs,ProcName,Cores,Volumes,DriveType,Capacity,PctFree | ft -autosize
-            A Sampling of Functions and Columns in ReportMode
-        .EXAMPLE
-            Get-ServerCollection | Test-ServerConnectionOnPipeline | Get-ProcInfoOnPipeline | Get-VolumeInfoOnPipeline | Select ComputerName,TotalProcs,Cores,Volumes,DriveType,Capacity,PctFree | Where PctFree -gt 95 | ft -autosize
+            Get-ServerCollection |
+                Test-ServerConnectionOnPipeline |
+                Get-ProcInfoOnPipeline |
+                Get-VolumeInfoOnPipeline |
+                Select-Object ComputerName,TotalProcs,Cores,Volumes,DriveType,Capacity,PctFree |
+                Where-Object PctFree -gt 95 |
+                Format-Table -autosize
+
             Gets all of the drives either over or under a threshold. IN this case % free greater than 95%
         .EXAMPLE
-            Get-ServerCollection | Test-ServerConnectionOnPipeline | Get-OSCaptionOnPipeline | Get-TimeZoneOnPipeline | Get-TotalMemoryOnPipeline | Get-MachineModelOnPipeline | Get-ProcInfoOnPipeline | Get-VolumeInfoOnPipeline -ReportMOde | Select ComputerName,OSVersion,TotalMemory,MachineModel,TotalProcs,ProcName,Cores,Volumes,DriveType,Capacity,PctFree | Where DriveType -eq 3 | Export-Csv -path .\ServerSpecs.csv -NoTypeInformation
+            Get-ServerCollection |
+                Test-ServerConnectionOnPipeline |
+                Get-OSCaptionOnPipeline |
+                Get-TimeZoneOnPipeline |
+                Get-TotalMemoryOnPipeline |
+                Get-MachineModelOnPipeline |
+                Get-ProcInfoOnPipeline |
+                Get-VolumeInfoOnPipeline |
+                Select-Object ComputerName,OSVersion,TotalMemory,MachineModel,TotalProcs,ProcName,Cores,Volumes,DriveType,Capacity,PctFree |
+                Where-Object DriveType -eq 3 |
+                Export-Csv -path .\ServerSpecs.csv -NoTypeInformation
+
             Gets a nice specs report and outputs it to a CSV file in the working directory
     #>
     [CmdletBinding()]

@@ -7,6 +7,9 @@ Function Get-ServerObjectCollection
             This function will take a random list of servers, such as an array or txt file
             and convert it on the pipeline to a collection of PSObjects. This collection
             will function exactly like an imported CSV with ComputerName as the column heading.
+
+            This can also be used to convert output from Active Directory. Get information on all
+            or a filtered list of Computers in an OU. See Examples.
         .EXAMPLE
             ('Server2','Server4') | Get-ServerObjectCollection | Test-ServerConnectionOnPipeline | ft
         .EXAMPLE

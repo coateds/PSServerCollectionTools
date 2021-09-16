@@ -21,7 +21,7 @@ jobs:
       # API key generated in PSGallery
         env:
           NUGET_KEY: ${{ secrets.PSGALLERYAPIKEY }}
-          BUILDVER: '1.0.0'
+          BUILDVER: '1.0.1'
         shell: pwsh
         run: |
           ./build_scripts/build.ps1

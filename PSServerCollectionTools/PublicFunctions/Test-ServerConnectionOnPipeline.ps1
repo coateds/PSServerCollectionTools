@@ -6,20 +6,32 @@ Function Test-ServerConnectionOnPipeline
         .DESCRIPTION
             This typically takes an imported csv file with a ComputerName Column as an imput object
             but just about any collection of objects that exposes .ComputerName should work
-            The output is the same type of object as the input (hopefully) so that it can be piped
+            The output is the same type of object as the input so that it can be piped
             to the next function to add another column.
             Makes both a WMI and PS Remote call
 
-            This very intentionally takes an object with .ComputerName as one of its properties because
-            it is adding columns to that object and then passing it along to the next cmdlet. If the most
+            This takes an object with .ComputerName as one of its properties because it is adding
+            columns to that object and then passing it along to the next cmdlet. If the most
             convenient input is a list of stings such as from a text file or the output of an AD Call
-            the use Get-ServerObjectCollection to create an object from the list
+            then use Get-ServerObjectCollection to create an object from the list.
+
+            The data gathering cmdlets in this module assume by default that this cmdlet will be called
+            and will not return information if the required protocol test fails. That is, if the server
+            fails to ping, the cmdlet to get the OS version will not even try. Each cmdlet has a
+            -NoError switch that can be used to omit the availability check
         .EXAMPLE
             Get-ServerCollection | Test-ServerConnectionOnPipeline | ft
+
+            Will test network, WMI and PSRemote availability of each server in the collection.
         .EXAMPLE
             ('Server2','Server4') | Get-ServerObjectCollection | Test-ServerConnectionOnPipeline | ft
 
             See Get-Help Get-ServerObjectCollection -examples for more
+        .EXAMPLE
+            Get-ServerCollection | Get-TimeZoneOnPipeline -NoErrorCheck
+
+            Gets the Timezone for all servers in the collection, but does not check the server
+            availability first.
     #>
 
     [CmdletBinding()]
