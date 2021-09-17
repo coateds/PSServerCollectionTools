@@ -25,4 +25,4 @@ jobs:
         shell: pwsh
         run: |
           ./build_scripts/build.ps1
-          Publish-Module -path ./PSServerCollectionTools -NuGetApiKey $env:NUGET_KEY -Verbose          
+          Publish-Module -path ./PSServerCollectionTools -NuGetApiKey $env:NUGET_KEY -Verbose -ProjectURI 'https://github.com/coateds/PSServerCollectionTools'
