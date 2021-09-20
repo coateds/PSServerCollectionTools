@@ -1,3 +1,10 @@
+# Quickstart
+For those of you that want to dive straight in, I recommend using the context based help (get-help), including examples and in this sequence:
+* Get-ServerCollection
+* Get-ServerObjectCollection
+* Test-ServerConnectionOnPipeline
+* Any of the others
+
 # PowerShell Server Collection Tools
 
 Despite knowing that the pipeline is supposed to be the power behind PowerShell, I have struggled with it. Like everyone else, I have seen the silly pipeline tricks that whack rogue instances of Notepad as if that basic editor were the great scripting enemy. A number of years ago, I started a contract where I was handed a listing of servers that were mine to administer and look after. There were categories within the list and I realized that by converting it to a CSV file, I could use Import-Csv to get an instant list of servers or even a subset of servers. It occurred to me that this would be very useful as the first item on the left of a pipeline.
@@ -120,4 +127,4 @@ Get-ServerCollection |
 
 Another way to use this would be to log the results of taking some action on a list of servers that would be exported as a CSV. At a minimum this could be used to note the changes not made due to errors. It could also be used to create an 'undo' table. Consider the idea where a registry change is desired on a large number of servers. Start with a CSV file of the servers and add columns for existing value and type plus a success/fail column. The resulting collection of objects could be exported to a new CSV that could be used to remediate problems and even run an undo to set everything back to what it was originally.
 
-I have been using this module in my current gig for a couple of years. Recently, I have completed my first pass of Pester v5 tests including the script analyzer. This is in preperation for building out a pipeline and even publication on PSGallery.
+I have been using this module in my current gig for a couple of years. Recently, I have completed my first pass of Pester v5 tests including the script analyzer. Finally, I have implemented a DevOps pipeline that publishes this to the PowerShell Gallery. My first version of this is available there now.
